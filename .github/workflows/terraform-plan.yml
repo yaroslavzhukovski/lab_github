@@ -35,7 +35,7 @@ jobs:
           terraform init \
             -backend-config="tenant_id=${{ secrets.AZURE_TENANT_ID }}" \
             -backend-config="client_id=${{ secrets.AZURE_CLIENT_ID }}" \
-            -backend-config="storage_account_name=sto12bz7idvrj" \
+            -backend-config="storage_account_name=sto12b7idvrj" \
             -backend-config="container_name=tfstate" \
             -backend-config="key=prod.terraform.tfstate"
 
