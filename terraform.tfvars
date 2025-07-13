@@ -1,2 +1,2 @@
-location         = "West Europe"
+location         = "swedencentral"
 application_name = "terraform-lab"
