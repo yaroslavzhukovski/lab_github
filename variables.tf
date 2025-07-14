@@ -26,3 +26,8 @@ variable "base_address_space" {
 
 }
 
+variable "firewall_private_ip" {
+  description = "The private IP address of the Azure Firewall."
+  type        = string
+
+}
