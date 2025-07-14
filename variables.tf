@@ -18,11 +18,7 @@ variable "environment" {
 
 }
 
-variable "resource_group_name" {
-  description = "The name of the resource group where resources will be created."
-  type        = string
 
-}
 
 variable "base_address_space" {
   description = "The base address space for the virtual network."
