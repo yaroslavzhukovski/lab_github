@@ -27,7 +27,7 @@ resource "azurerm_route_table" "firewall_route" {
   }
 }
 
-resource "azurerm_subnet_route_table_association" "vm_subnet_assoc" {
-  subnet_id      = azurerm_subnet.vm_subnet.id
+resource "azurerm_subnet_route_table_association" "bravo_subnet_assoc" {
+  subnet_id      = azurerm_subnet.custom["bravo"].id
   route_table_id = azurerm_route_table.firewall_route.id
 }
