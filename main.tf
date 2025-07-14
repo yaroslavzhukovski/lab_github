@@ -41,7 +41,7 @@ module "firewall" {
   source              = "./modules/firewall"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
-  firewall_subnet_id  = module.network.subnet_ids["AzureFirewallSubnet"]
+  firewall_subnet_id  = module.network.subnet_ids["firewall"]
   application_name    = var.application_name
   environment         = var.environment
 }
