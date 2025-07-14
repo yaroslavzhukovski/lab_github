@@ -26,9 +26,3 @@ variable "base_address_space" {
 
 }
 
-variable "subnets" {
-  type = map(object({
-    name           = string
-    address_prefix = string
-  }))
-}

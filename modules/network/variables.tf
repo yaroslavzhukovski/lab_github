@@ -28,10 +28,6 @@ variable "firewall_private_ip" {
 
 }
 
-variable "address_prefixes" {
-  description = "The address prefixes for the VM subnet."
-  type        = list(string)
-}
 
 variable "subnets" {
   description = "A map of subnets to be created in the virtual network."
