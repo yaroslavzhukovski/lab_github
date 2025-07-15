@@ -81,7 +81,6 @@ module "compute" {
   source              = "./modules/compute"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
-  application_name    = var.application_name
   environment         = var.environment
   admin_username      = "adminuser"
   ssh_public_key      = azurerm_key_vault_secret.scale_set_public_key.value

@@ -38,11 +38,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     username   = var.admin_username
     public_key = var.ssh_public_key
   }
-  disable_password_authentication = false
+  disable_password_authentication = true
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
+    offer     = "0001-com-ubuntu-server-jammy"
     sku       = "22_04-lts"
     version   = "latest"
   }
