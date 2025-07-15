@@ -19,10 +19,6 @@ variable "admin_username" {
   type        = string
 }
 
-variable "admin_password" {
-  description = "The admin password for the virtual machines."
-  type        = string
-}
 
 variable "subnet_id" {
   description = "The ID of the subnet where the virtual machines will be deployed."
