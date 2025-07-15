@@ -84,7 +84,7 @@ module "compute" {
   application_name    = var.application_name
   environment         = var.environment
   admin_username      = "adminuser"
-  ssh_public_key =            = azurerm_key_vault_secret.scale_set_public_key.value
+  ssh_public_key      = azurerm_key_vault_secret.scale_set_public_key.value
   subnet_id           = module.network.subnet_ids["bravo"]
 
 }
