@@ -89,7 +89,7 @@ module "compute" {
 }
 
 resource "azurerm_role_assignment" "vmss_keyvault_reader" {
-  principal_id         = azurerm_linux_virtual_machine_scale_set.vmss.identity[0].principal_id
+  principal_id         = module.compute.vmss_identity
   role_definition_name = "Key Vault Secrets User"
   scope                = azurerm_key_vault.my_key_vault.id
 }
