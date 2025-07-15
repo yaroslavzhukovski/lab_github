@@ -3,7 +3,38 @@ resource "azurerm_resource_group" "main" {
   location = var.location
 }
 
+data "azurerm_client_config" "current" {}
 
+resource "azurerm_key_vault" "my_key_vault" {
+  name                        = "kvyarikz"
+  location                    = azurerm_resource_group.main.location
+  resource_group_name         = azurerm_resource_group.main.name
+  enabled_for_disk_encryption = true
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  soft_delete_retention_days  = 7
+  purge_protection_enabled    = false
+
+  sku_name                  = "standard"
+  enable_rbac_authorization = true
+}
+
+
+resource "tls_private_key" "scale_set_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "azurerm_key_vault_secret" "scale_set_private_key" {
+  name         = "scaleSetSshPrivateKey"
+  value        = tls_private_key.scale_set_key.private_key_pem
+  key_vault_id = azurerm_key_vault.my_key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "scale_set_public_key" {
+  name         = "scaleSetSshPublicKey"
+  value        = tls_private_key.scale_set_key.public_key_openssh
+  key_vault_id = azurerm_key_vault.my_key_vault.id
+}
 
 
 locals {
@@ -44,4 +75,22 @@ module "firewall" {
   firewall_subnet_id  = module.network.subnet_ids["firewall"]
   application_name    = var.application_name
   environment         = var.environment
+}
+
+module "compute" {
+  source              = "./modules/compute"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+  application_name    = var.application_name
+  environment         = var.environment
+  admin_username      = "adminuser"
+  sssh_public_key =            = azurerm_key_vault_secret.scale_set_public_key.value
+  subnet_id           = module.network.subnet_ids["bravo"]
+
+}
+
+resource "azurerm_role_assignment" "vmss_keyvault_reader" {
+  principal_id         = azurerm_linux_virtual_machine_scale_set.vmss.identity[0].principal_id
+  role_definition_name = "Key Vault Secrets User"
+  scope                = azurerm_key_vault.my_key_vault.id
 }
