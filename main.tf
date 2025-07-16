@@ -101,3 +101,12 @@ module "bastion" {
   bastion_subnet_id   = module.network.subnet_ids["bastion"]
 
 }
+
+module "log_analytics_workspace" {
+  source              = "./modules/log_analytics_workspace"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+  application_name    = var.application_name
+  environment         = var.environment
+
+}
