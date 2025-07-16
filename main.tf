@@ -144,18 +144,3 @@ module "vmss_diagnostics" {
   metric_categories = ["AllMetrics"]
 
 }
-module "bastion_diagnostics" {
-  source = "./modules/diagnostic_settings"
-
-  name                       = "diag-bastion"
-  target_resource_id         = module.bastion.bastion_id
-  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
-
-  log_categories = [
-    "AzureBastionAuditEvent",
-    "AzureBastionConnection"
-  ]
-
-  metric_categories = ["AllMetrics"]
-
-}
