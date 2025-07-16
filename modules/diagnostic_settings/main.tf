@@ -23,21 +23,18 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   dynamic "log" {
     for_each = local.logs
     content {
-      category = log.value.category
-      enabled  = log.value.enabled
+      category = each.value.category
+      enabled  = each.value.enabled
 
-      retention_policy {
-        enabled = false
-        days    = 0
-      }
+
     }
   }
 
   dynamic "metric" {
     for_each = local.metrics
     content {
-      category = metric.value.category
-      enabled  = metric.value.enabled
+      category = each.value.category
+      enabled  = each.value.enabled
 
 
     }
