@@ -112,8 +112,16 @@ module "log_analytics_workspace" {
 }
 
 module "firewall_diagnostics" {
-  source                     = "./modules/diagnostic_settings_firewall"
-  name                       = "firewall-diagnostics"
+  source = "./modules/diagnostic_settings"
+
+  name                       = "diag-fw"
   target_resource_id         = module.firewall.firewall_id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log_categories = [
+    "AZFWApplicationRule",
+    "AZFWNetworkRule",
+    "AZFWDnsQuery",
+    "AZFWThreatIntel"
+  ]
 }

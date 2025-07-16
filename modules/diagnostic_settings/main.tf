@@ -3,23 +3,16 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   target_resource_id         = var.target_resource_id
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
-  log {
-    category = "AzureFirewallApplicationRule"
-    enabled  = true
+  dynamic "log" {
+    for_each = var.log_categories
+    content {
+      category = log.value
+      enabled  = true
 
-    retention_policy {
-      enabled = false
-      days    = 0
-    }
-  }
-
-  log {
-    category = "AzureFirewallNetworkRule"
-    enabled  = true
-
-    retention_policy {
-      enabled = false
-      days    = 0
+      retention_policy {
+        enabled = false
+        days    = 0
+      }
     }
   }
 
@@ -33,3 +26,4 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
     }
   }
 }
+
