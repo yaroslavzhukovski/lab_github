@@ -110,3 +110,33 @@ module "log_analytics_workspace" {
   environment         = var.environment
 
 }
+
+module "diag-firewall" {
+  source                     = "./modules/diagnostic_settings"
+  name                       = "diag-firewall"
+  target_resource_id         = module.firewall.firewall_id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+  logs                       = ["AzureFirewallApplicationRule", "AzureFirewallNetworkRule", "AzureFirewallDnsProxy"]
+  metrics                    = ["AllMetrics"]
+
+}
+
+module "diag-vmss" {
+  source                     = "./modules/diagnostic_settings"
+  name                       = "diag-vmss"
+  target_resource_id         = module.compute.vmss_id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+  logs                       = ["VirtualMachineInsights", "GuestState"]
+  metrics                    = ["AllMetrics"]
+
+}
+
+module "diag-bastion" {
+  source                     = "./modules/diagnostic_settings"
+  name                       = "diag-bastion"
+  target_resource_id         = module.bastion.bastion_host_id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+  logs                       = ["AzureBastionHostConnection"]
+  metrics                    = ["AllMetrics"]
+
+}
