@@ -124,4 +124,7 @@ module "firewall_diagnostics" {
     "AZFWDnsQuery",
     "AZFWThreatIntel"
   ]
+
+  metric_categories = ["AllMetrics"]
 }
+
