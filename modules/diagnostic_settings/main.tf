@@ -23,8 +23,8 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   dynamic "log" {
     for_each = local.logs
     content {
-      category = each.value.category
-      enabled  = each.value.enabled
+      category = log.value.category
+      enabled  = log.value.enabled
 
 
     }
@@ -33,8 +33,8 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   dynamic "metric" {
     for_each = local.metrics
     content {
-      category = each.value.category
-      enabled  = each.value.enabled
+      category = metric.value.category
+      enabled  = metric.value.enabled
 
 
     }
