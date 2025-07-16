@@ -13,7 +13,7 @@ resource "azurerm_bastion_host" "bastion_host" {
 
   ip_configuration {
     name                 = "configuration"
-    subnet_id            = azurerm_subnet.custom["bastion"].id
+    subnet_id            = var.bastion_subnet_id
     public_ip_address_id = azurerm_public_ip.pip-bastion.id
   }
 }
