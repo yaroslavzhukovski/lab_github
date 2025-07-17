@@ -144,3 +144,13 @@ module "vmss_diagnostics" {
   metric_categories = ["AllMetrics"]
 
 }
+
+module "storage" {
+  source              = "./modules/storage_account"
+  name                = "st${var.application_name}${var.environment}"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+
+  subnet_ids = [module.network.subnet_ids["bravo"],
+  module.network.subnet_ids["bastion"]]
+}
