@@ -147,7 +147,7 @@ module "vmss_diagnostics" {
 
 module "storage" {
   source              = "./modules/storage_account"
-  name                = "st${var.application_name}${var.environment}"
+  name                = "st${var.environment}1"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
 
