@@ -159,7 +159,7 @@ module "storage_diagnostics" {
   source = "./modules/diagnostic_settings"
 
   name                       = "diag-storage"
-  target_resource_id         = module.storage_account.storage_account_id
+  target_resource_id         = module.storage.storage_account_id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
   log_categories = [
