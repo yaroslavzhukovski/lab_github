@@ -171,3 +171,18 @@ module "storage_diagnostics" {
   metric_categories = ["AllMetrics"]
 
 }
+
+module "storage_private_endpoint" {
+  source = "./modules/private_endpoint"
+
+  private_endpoint_name = "pe-storage"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.main.name
+
+  subnet_id          = module.network.subnet_ids["bravo"]
+  target_resource_id = module.storage.storage_account_id
+  subresource_names  = ["blob"]
+
+  private_dns_zone_name = "privatelink.blob.core.windows.net"
+  virtual_network_id    = module.network.vnet_id
+}
