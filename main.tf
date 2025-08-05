@@ -126,6 +126,8 @@ module "firewall_diagnostics" {
   ]
 
   metric_categories = ["AllMetrics"]
+
+  depends_on = [module.firewall, module.log_analytics_workspace]
 }
 
 module "vmss_diagnostics" {
@@ -142,6 +144,7 @@ module "vmss_diagnostics" {
   ]
 
   metric_categories = ["AllMetrics"]
+  depends_on        = [module.compute, module.log_analytics_workspace]
 
 }
 
@@ -169,6 +172,7 @@ module "storage_diagnostics" {
   ]
 
   metric_categories = ["AllMetrics"]
+  depends_on        = [module.storage, module.log_analytics_workspace]
 
 }
 
@@ -185,6 +189,8 @@ module "storage_private_endpoint" {
 
   private_dns_zone_name = "privatelink.blob.core.windows.net"
   virtual_network_id    = module.network.vnet_id
+
+  depends_on = [module.storage, module.network]
 }
 
 module "recovery_vault" {
@@ -201,6 +207,8 @@ module "policy_https_storage" {
   display_name         = "Enforce HTTPS for Storage Accounts"
   policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/3fca9035-2a5c-41b1-8d09-e4c2d58b82a7" # built-in policy
   scope                = azurerm_resource_group.main.id
+  depends_on           = [azurerm_resource_group.main]
+
 }
 
 module "policy_disallow_blob_public_access" {
@@ -210,6 +218,7 @@ module "policy_disallow_blob_public_access" {
   display_name         = "Disallow Public Blob Access"
   policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/2f6b6b6a-1ce6-46ac-8c90-0f7aa9a5ce5e"
   scope                = azurerm_resource_group.main.id
+  depends_on           = [azurerm_resource_group.main]
 }
 
 module "policy_allowed_locations" {
@@ -225,6 +234,7 @@ module "policy_allowed_locations" {
       value = ["swedencentral", "westeurope"]
     }
   }
+  depends_on = [azurerm_resource_group.main]
 }
 
 module "policy_backup_vm" {
@@ -234,4 +244,5 @@ module "policy_backup_vm" {
   display_name         = "Enable Backup for Virtual Machines"
   policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/0e713c6b-42d3-4e48-9e6e-621a84e04358"
   scope                = azurerm_resource_group.main.id
+  depends_on           = [azurerm_resource_group.main]
 }
