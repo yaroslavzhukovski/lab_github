@@ -186,3 +186,10 @@ module "storage_private_endpoint" {
   private_dns_zone_name = "privatelink.blob.core.windows.net"
   virtual_network_id    = module.network.vnet_id
 }
+
+module "recovery_vault" {
+  source              = "./modules/recovery_services_vault"
+  name                = "rsv-${var.application_name}-${var.environment}"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+}
