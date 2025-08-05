@@ -194,21 +194,12 @@ module "recovery_vault" {
   resource_group_name = azurerm_resource_group.main.name
 }
 
-
 module "policy_https_storage" {
   source = "./modules/policy_assignment"
 
   name                 = "enforce-https-storage"
   display_name         = "Enforce HTTPS for Storage Accounts"
-  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/3fca9035-2a5c-41b1-8d09-e4c2d58b82a7"
-  scope                = module.storage.storage_account_id
-}
-
-module "policy_backup_vm" {
-  source = "./modules/policy_assignment"
-
-  name                 = "enforce-vm-backup"
-  display_name         = "Enforce VM Backup Policy"
-  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/4c09209c-5c4f-4d3b-97e2-ef6e1f9b9aef"
+  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/3fca9035-2a5c-41b1-8d09-e4c2d58b82a7" # built-in policy
   scope                = azurerm_resource_group.main.id
 }
+
