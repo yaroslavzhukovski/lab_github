@@ -203,3 +203,35 @@ module "policy_https_storage" {
   scope                = azurerm_resource_group.main.id
 }
 
+module "policy_disallow_blob_public_access" {
+  source = "./modules/policy_assignment"
+
+  name                 = "disallow-blob-public-access"
+  display_name         = "Disallow Public Blob Access"
+  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/2f6b6b6a-1ce6-46ac-8c90-0f7aa9a5ce5e"
+  scope                = azurerm_resource_group.main.id
+}
+
+module "policy_allowed_locations" {
+  source = "./modules/policy_assignment"
+
+  name                 = "allowed-locations"
+  display_name         = "Restrict Allowed Locations"
+  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c"
+  scope                = azurerm_resource_group.main.id
+
+  parameters = {
+    listOfAllowedLocations = {
+      value = ["swedencentral", "westeurope"]
+    }
+  }
+}
+
+module "policy_backup_vm" {
+  source = "./modules/policy_assignment"
+
+  name                 = "enable-backup-for-vm"
+  display_name         = "Enable Backup for Virtual Machines"
+  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/0e713c6b-42d3-4e48-9e6e-621a84e04358"
+  scope                = azurerm_resource_group.main.id
+}
