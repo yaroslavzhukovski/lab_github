@@ -28,3 +28,8 @@ resource "azurerm_private_endpoint" "main" {
     private_dns_zone_ids = [azurerm_private_dns_zone.main.id]
   }
 }
+
+module "policy_storage" {
+  source = "./modules/policy_storage"
+  scope  = azurerm_resource_group.main.id
+}
