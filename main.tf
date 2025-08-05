@@ -194,3 +194,8 @@ module "recovery_vault" {
   resource_group_name = azurerm_resource_group.main.name
 }
 
+
+module "policy_storage" {
+  source = "./modules/policy_storage"
+  scope  = azurerm_resource_group.main.id
+}
